@@ -1,4 +1,4 @@
-import pygame, time, math, random, class_ as c, function_ as f, json
+import pygame, time, math, random
 
 pygame.init()
 pygame.display.set_caption("Magic Mushroom")
@@ -20,8 +20,16 @@ player_image = pygame.image.load('images/wiz.png')
 player_image = pygame.transform.scale(player_image, (40, 40))
 player_image.set_colorkey((0, 0, 0))
 
+game_map = []
+game_map_t = []
 
-
+with open("world.txt", "r") as file:
+    for line in file:
+        for char in line:
+            game_map_t.append(char)
+        game_map.append(game_map_t)
+        game_map_t = []       
+    
 grass_image = pygame.image.load('world/grass.png')
 grass_image = pygame.transform.scale(grass_image, (32, 32))
 
