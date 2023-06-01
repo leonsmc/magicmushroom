@@ -19,7 +19,7 @@ purple = (255, 0, 255)
 yellow = (255, 255, 0)
 lightblue = (173, 216, 230)
 
-player_image = pygame.image.load('images/wiz.png').convert()
+player_image = pygame.image.load('world/wiz.png').convert()
 player_image = pygame.transform.scale(player_image, (20, 20))
 player_image.set_colorkey((0, 0, 0))
 
@@ -57,7 +57,7 @@ def blitter(map):
         y += 1
     return tile_rects
 
-game_map = mapper("overworld.txt")
+game_map = mapper("level_1.txt")
 
 def collision_test(rect, tiles):
     hit_list = []
@@ -100,7 +100,7 @@ test_rect = pygame.Rect(100,100,100,50)
 while True: # game loop
     display.fill((146,244,255))
 
-    tile_rects = blitter(mapper("overworld.txt"))
+    tile_rects = blitter(mapper("level_1.txt"))
 
     player_movement = [0, 0]
     if moving_right:
@@ -127,17 +127,17 @@ while True: # game loop
             pygame.quit() # stop pygame
             sys.exit() # stop script
         if event.type == KEYDOWN:
-            if event.key == K_RIGHT:
+            if event.key == K_d:
                 moving_right = True
-            if event.key == K_LEFT:
+            if event.key == K_a:
                 moving_left = True
-            if event.key == K_UP:
+            if event.key == K_SPACE:
                 if air_timer < 6:
                     player_y_momentum = -5
         if event.type == KEYUP:
-            if event.key == K_RIGHT:
+            if event.key == K_d:
                 moving_right = False
-            if event.key == K_LEFT:
+            if event.key == K_a:
                 moving_left = False
 
     surf = pygame.transform.scale(display, WINDOW_SIZE)
