@@ -1,31 +1,20 @@
 import pygame, time, math, random, os, sys
 clock = pygame.time.Clock()
 from pygame.locals import *
+from images import *
+
 pygame.init() 
 pygame.display.set_caption("Magic Mushroom")
 
 height = 640
 length = 1120
+FPS = 60
 
 WINDOW_SIZE = (length,height)
 
 screen = pygame.display.set_mode(WINDOW_SIZE,0,32)
 display = pygame.Surface((length/2, height/2))
 
-GReeeN = (0, 255, 0)
-schwarz = (0, 0 , 0)
-white = (255, 255, 255)
-purple = (255, 0, 255)
-yellow = (255, 255, 0)
-lightblue = (173, 216, 230)
-
-player_image = pygame.image.load('world/wiz.png').convert()
-player_image = pygame.transform.scale(player_image, (20, 20))
-player_image.set_colorkey((0, 0, 0))
-
-grass_image = pygame.image.load('world/grass.png')
-dirt_image = pygame.image.load('world/dirt.png')
-pink_image = pygame.image.load('world/shroom_pink.png')
 TILE_SIZE = grass_image.get_width()
 
 def mapper(datei):
@@ -120,17 +109,21 @@ while True: # game loop
     else:
         air_timer += 1
 
-    display.blit(player_image, (player_rect.x, player_rect.y))
+    display.blit(player_image_real, (player_rect.x, player_rect.y))
 
-    for event in pygame.event.get(): # event loop
-        if event.type == QUIT: # check for window quit
-            pygame.quit() # stop pygame
-            sys.exit() # stop script
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit() 
+
         if event.type == KEYDOWN:
-            if event.key == K_d:
+            if event.key == K_d: #rechts
                 moving_right = True
-            if event.key == K_a:
+                player_image_real = player_image
+
+            if event.key == K_a: #links
                 moving_left = True
+                player_image_real = player_image_r
+
             if event.key == K_SPACE:
                 if air_timer < 6:
                     player_y_momentum = -5
@@ -142,5 +135,5 @@ while True: # game loop
 
     surf = pygame.transform.scale(display, WINDOW_SIZE)
     screen.blit(surf, (0, 0))
-    pygame.display.update() # update display
-    clock.tick(60) # maintain 60 fps
+    pygame.display.update()
+    clock.tick(FPS)
