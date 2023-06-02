@@ -1,0 +1,14 @@
+block zuweisung:
+
+1   dirt_image
+2   grass_image
+3   stone_image
+4
+5
+
+obstacle zuweisung:
+
+6   shroom_green_image
+7   shroom_red_image
+8   shroom_glow_image
+9   shroom_pink_image
