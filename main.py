@@ -34,13 +34,31 @@ def blitter(map):
     for row in map:
         x = 0
         for tile in row:
+            # Blöcke: ----------------------------------------------------------
             if tile == '1':
                 display.blit(dirt_image, (x * TILE_SIZE, y * TILE_SIZE))
             if tile == '2':
                 display.blit(grass_image, (x * TILE_SIZE, y * TILE_SIZE))
             if tile == '3':
-                display.blit(pink_image, (x * TILE_SIZE, y * TILE_SIZE))
-            if tile == '1' or tile == "2":
+                display.blit(stone_image, (x * TILE_SIZE, y * TILE_SIZE))
+            if tile == '4':
+                #display.blit(shroom_pink_image, (x * TILE_SIZE, y * TILE_SIZE))
+                pass
+            if tile == '5':
+                #display.blit(shroom_pink_image, (x * TILE_SIZE, y * TILE_SIZE))
+                pass
+
+            # Obstacles: -------------------------------------------------------
+            if tile == '6':
+                display.blit(shroom_green_image, (x * TILE_SIZE, y * TILE_SIZE))
+            if tile == '7':
+                display.blit(shroom_red_image, (x * TILE_SIZE, y * TILE_SIZE))
+            if tile == '8':
+                display.blit(shroom_glow_image, (x * TILE_SIZE, y * TILE_SIZE))
+            if tile == '9':
+                display.blit(shroom_pink_image, (x * TILE_SIZE, y * TILE_SIZE))
+
+            if tile == '1' or tile == "2" or tile == "3" or tile == "4" or tile == "5":
                 tile_rects.append(pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE))
             x += 1
         y += 1
