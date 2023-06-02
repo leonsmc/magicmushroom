@@ -64,7 +64,7 @@ def blitter(map):
         y += 1
     return tile_rects
 
-game_map = mapper("level_1.txt")
+game_map = mapper("levels/level_1.txt")
 
 def collision_test(rect, tiles):
     hit_list = []
@@ -107,7 +107,7 @@ test_rect = pygame.Rect(100,100,100,50)
 while True: # game loop
     display.fill((146,244,255))
 
-    tile_rects = blitter(mapper("level_1.txt"))
+    tile_rects = blitter(mapper("levels/level_1.txt"))
 
     player_movement = [0, 0]
     if moving_right:
