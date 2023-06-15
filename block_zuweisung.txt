@@ -8,7 +8,7 @@ block zuweisung:
 
 obstacle zuweisung:
 
-6   shroom_green_image
-7   shroom_red_image
-8   shroom_glow_image
-9   shroom_pink_image
+6   shroom_green_image  1 Sec
+7   shroom_red_image    2 Sec
+8   shroom_glow_image   3 Sec
+9   shroom_pink_image   4 Sec

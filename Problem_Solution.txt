@@ -1,0 +1,9 @@
+Problem:
+    Kollisionen für Pilze 
+Lösung:
+    Pilze einzeln an Definierten Orten einer Liste mit Random spawnen
+
+Problem:
+    Bei neuem Level kann Player in Blöcken spawnen
+Lösung:
+    Am Levelstart Player auf Vordefinierten Ort setzen
