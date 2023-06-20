@@ -1,4 +1,4 @@
-import pygame, time, math, random, os, sys
+import pygame, time, math, random, sys
 clock = pygame.time.Clock()
 from pygame.locals import *
 from images import *
@@ -38,6 +38,12 @@ def check_collision(player_rect, location, radius):
         return True
     else:
         return False
+    
+def collision(player_rect, obstacle_rect):
+    if player_rect.colliderect(obstacle_rect):
+        return True
+    return False
+    
 
 def blitter(map):
     tile_rects = []
@@ -106,6 +112,9 @@ timer = 7*60
 level = 1
 zeit_gesamt = 0
 minuten = 0
+punkte = 0
+
+
 
 player_rect = pygame.Rect(32, 32, player_image.get_width(), player_image.get_height())
 test_rect = pygame.Rect(100,100,100,50)
@@ -114,34 +123,61 @@ while True: # game loop
     if zeit_gesamt == 60*60:
         zeit_gesamt -= 60*60
         minuten += 1
-    zeit_anzeige = font.render(f"Zeit: {round(timer/60)}", True, "white")
+    zeit_anzeige = font.render(f"Punkte: {punkte} / Zeit: {round(timer/60)}", True, "white")
     zeit_anzeige_rect = zeit_anzeige.get_rect()
-
     zeit_ges_anzeige = font.render(f"Zeit: {minuten}min {round(zeit_gesamt/60)}s", True, "white")
+    punkte_ges_anzeige = font.render(f"{punkte} Punkte", True, "white")
 
     timer -= 1
     if level <= 4:
         zeit_gesamt += 1
-    if timer == 0 and level <= 4:
+    if timer <= 0 and level <= 4:
         level += 1
         timer = 7*60
 
     if level == 1:
         display.fill("black")
         tile_rects = blitter(mapper("levels/level_1.txt"))
+        if kopf == 0:
+            player_rect.center=(40, 16*2)
+            kopf += 1
+
     elif level == 2:
         display.fill(lightblue)
         tile_rects = blitter(mapper("levels/level_2.txt"))
+        if kopf == 1:
+            player_rect.center=(40, 16*2)
+            kopf += 1
+
     elif level == 3:
         display.fill(lightblue)
         tile_rects = blitter(mapper("levels/level_3.txt"))
+        if kopf == 2:
+            player_rect.center=(40, 16*2)
+            kopf += 1
     elif level == 4:
         display.fill("black")
         tile_rects = blitter(mapper("levels/level_4.txt"))
+        if kopf == 3:
+            player_rect.center=(40, 16*2)
+            kopf += 1
     elif level > 4:
+        if kopf == 4:
+            player_rect.center=(40, 16*2)
+            kopf = 0
         display.fill("black")
         tile_rects = blitter(mapper("levels/level_end.txt"))
-        pass
+        display.blit(restart_image, restart_rect)
+        display.blit(exit_image, exit_rect)
+        
+        if collision(player_rect, exit_rect):
+            sys.exit()
+        if collision(player_rect, restart_rect):
+            level = 1
+            zeit_gesamt = 0
+            minuten = 0
+            timer = 0
+            punkte = 0
 
     player_movement = [0, 0]
     if moving_right:
@@ -165,7 +201,7 @@ while True: # game loop
 
     for event in pygame.event.get():
         if event.type == QUIT:
-            pygame.quit() 
+            sys.exit()
 
         if event.type == KEYDOWN:
             if event.key == K_d: #rechts
@@ -192,12 +228,33 @@ while True: # game loop
     else:
         screen.blit(game_over_image, (0, 0))
         screen.blit(surf, (0, 0))
-        screen.blit(zeit_ges_anzeige, (320-100, 320))
+        screen.blit(zeit_ges_anzeige, (320-100, 220))
+        screen.blit(punkte_ges_anzeige, (320-70, 270))
+        neuer_highscore = punkte
+
+        # Pfad zur Textdatei
+        dateipfad = "highscore.txt"
+
+        # Highscore aus der Datei lesen
+        with open(dateipfad, "r") as datei:
+            alter_highscore = int(datei.read())
+
+        # Überprüfen, ob der neue Highscore größer ist
+        if neuer_highscore > alter_highscore:
+            # Den neuen Highscore in die Datei schreiben
+            with open(dateipfad, "w") as datei:
+                datei.write(str(neuer_highscore))
+        with open(dateipfad, "r") as datei:
+            highscore = int(datei.read())
+
+        highscore_anzeige = font.render(f"Highscore: {highscore}", True, "white")
+        screen.blit(highscore_anzeige, (320-100, 170))
 
     if level == 1:
         if check_collision(player_rect, shroom_location, 32) == True:
             shroom_location = level_1_location[random.randint(0,6)]
-            timer += 180
+            timer += 140
+            punkte += 100
         screen.blit(shroom_pink_image, shroom_location)
     
     if level == 2:
@@ -209,12 +266,14 @@ while True: # game loop
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_2_location[random.randint(0,6)]
                 timer += 90
+                punkte += 120
                 var = random.randint(1,2)
         if var == 2:
             screen.blit(shroom_green_image, shroom_location)
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_2_location[random.randint(0,6)]
                 timer += 180
+                punkte += 50
                 var = random.randint(1,2)
 
     if level == 3:
@@ -226,18 +285,21 @@ while True: # game loop
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_3_location[random.randint(0, len(level_3_location)-1)]
                 timer += 60
+                punkte += 120
                 var = random.randint(1,3)
         if var == 2:
             screen.blit(shroom_pink_image, shroom_location)
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_3_location[random.randint(0, len(level_3_location)-1)]
                 timer += 180 
+                punkte += 100
                 var = random.randint(1,3)
         if var == 3:
             screen.blit(shroom_green_image, shroom_location)
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_3_location[random.randint(0, len(level_3_location)-1)]
                 timer += 100
+                punkte += 50
                 var = random.randint(1,3)
 
     if level == 4:
@@ -249,30 +311,36 @@ while True: # game loop
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_4_location[random.randint(0, 7)]
                 timer += 140
+                punkte += 180
                 var = random.randint(3,4)
         if var == 2:
             screen.blit(shroom_red_image, shroom_location)
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_4_location[random.randint(0, 7)]
                 timer += 180
+                punkte += 120
                 var = random.randint(2,4)
         if var == 3:
             screen.blit(shroom_green_image, shroom_location)
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_4_location[random.randint(0, 7)]
                 timer += 100
+                punkte += 50
                 var = random.randint(1,2)
         if var == 4:
             screen.blit(shroom_pink_image, shroom_location)
             if check_collision(player_rect, shroom_location, 32) == True:
                 shroom_location = level_4_location[random.randint(0, 7)]
                 timer += 200
+                punkte += 100
                 var = random.randint(1,3)
 
     if level > 4:
         while running == True:
-            player_rect.center = (320/2, 320/2)
+            player_rect.center = (320/2, 280)
             running = False
+
+        
         #screen.blit(shroom_pink_image, shroom_location)
     
     pygame.display.update()

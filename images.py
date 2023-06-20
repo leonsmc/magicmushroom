@@ -33,6 +33,18 @@ shroom_green_image = pygame.image.load('world/shroom_green.png')
 shroom_green_image = pygame.transform.scale(shroom_green_image, (32, 32))
 shroom_green_image.set_colorkey((0, 0, 0))
 
+restart_image = pygame.image.load("world/restart.png")
+restart_rect = restart_image.get_rect()
+restart_rect.center = (320/2, 320/2+50)
+restart_image = pygame.transform.scale(restart_image, (40, 24))
+
+
+exit_image = pygame.image.load("world/exit.png")
+exit_rect = exit_image.get_rect()
+exit_rect.center = (320/2+120, 320/2+50)
+exit_image = pygame.transform.scale(exit_image, (40, 24))
+
+
 game_over_image = pygame.image.load('world/black.png')
 
 
@@ -57,3 +69,5 @@ running = True
 x = True
 uwu = True
 lawnmower = True
+
+kopf = 0
