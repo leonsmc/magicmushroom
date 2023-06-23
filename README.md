@@ -1,28 +1,32 @@
 # magicmushroom
 
-**Beschreibung:**
+## **Description**
 
-Mirakulus hat sich in einem unbekannten Gebiet, auf der Suche nach seinen Pilzen, um den Zaubertrank zu brauen, verlaufen und kann nur seinen Zaubertrank brauen, indem er Pilze einsammelt. Hilf ihm dabei und sammel soviel Pilze wie möglich einzusammeln bevor er zurück muss.
+Miraculous got lost in an unknown area looking for his mushrooms to brew the magic potion and can only brew his magic potion by collecting mushrooms. Help him and collect as many mushrooms as possible before he has to go back.
 
-A -       Links
 
-D -      Rechts
 
-SPACE -   Springen 
+### **Key assignment**
+
+| Key | Description |
+|:---:|:-|
+|  A  | To go left  |
+|  D  | To go right |
+|Space| To jump     |
+
+## Some Code
 
 ```python
 for i in range(69):
-    print("Mirakulus braucht den Bubatz")
+    print("Mirakulus need Bubatz")
 ```
 
-## Screenshots
+## **Screenshots**
 
-![Icon](icon.png)
 
-![Level 1](screenshots/level_1.png)
 
 ![Level 2](screenshots/level_2.png)
 
-![Level 3](screenshots/level_3.png)
+![Player Character](world/wiz_L.png)
 
-![Level 4](screenshots/level_4.png)
+![Mushromm](world/shroom_red.png)
