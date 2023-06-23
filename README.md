@@ -12,10 +12,12 @@ SPACE -   Springen
 
 ```python
 for i in range(69):
-    print("Digga mit D")
+    print("Mirakulus braucht den Bubatz")
 ```
 
 ## Screenshots
+
+![Icon](icon.png)
 
 ![Level 1](screenshots/level_1.png)
 
