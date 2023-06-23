@@ -3,6 +3,8 @@ clock = pygame.time.Clock()
 from pygame.locals import *
 from images import *
 
+
+
 pygame.init() 
 pygame.display.set_caption("Magic Mushroom")
 
